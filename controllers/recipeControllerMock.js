@@ -5,36 +5,44 @@ const User = require('../models/user');
 const mockRecipes = {
     "healthy chicken dinner": {
         "name": "Mediterranean Herb-Crusted Chicken",
-        "ingredients": {
-            "chicken breast": {
+        "summary": "Tender chicken breast coated in aromatic Mediterranean herbs, pan-seared to golden perfection. Served with roasted vegetables and a light lemon-herb sauce.",
+        "ingredients": [
+            {
+                "name": "Chicken Breast",
                 "amount": "2 pieces (6 oz each)",
                 "price": 8.50
             },
-            "olive oil": {
+            {
+                "name": "Olive Oil",
                 "amount": "2 tbsp",
                 "price": 1.20
             },
-            "mixed herbs (oregano, thyme, rosemary)": {
+            {
+                "name": "Mixed Herbs (oregano, thyme, rosemary)",
                 "amount": "1 tbsp",
                 "price": 0.75
             },
-            "lemon": {
+            {
+                "name": "Lemon",
                 "amount": "1 medium",
                 "price": 0.80
             },
-            "garlic": {
+            {
+                "name": "Garlic",
                 "amount": "3 cloves",
                 "price": 0.50
             },
-            "cherry tomatoes": {
+            {
+                "name": "Cherry Tomatoes",
                 "amount": "1 cup",
                 "price": 2.25
             },
-            "fresh spinach": {
+            {
+                "name": "Fresh Spinach",
                 "amount": "2 cups",
                 "price": 1.50
             }
-        },
+        ],
         "steps": [
             "Step 1: Preheat oven to 400°F (200°C). Line a baking sheet with parchment paper.",
             "Step 2: Season chicken breasts with salt, pepper, and mixed herbs on both sides.",
@@ -56,36 +64,44 @@ const mockRecipes = {
     },
     "vegetarian pasta": {
         "name": "Creamy Mushroom and Spinach Pasta",
-        "ingredients": {
-            "whole wheat pasta": {
+        "summary": "Rich and comforting pasta featuring sautéed mushrooms and fresh spinach in a creamy garlic sauce. Perfect comfort food that's surprisingly easy to make.",
+        "ingredients": [
+            {
+                "name": "Whole Wheat Pasta",
                 "amount": "8 oz",
                 "price": 2.50
             },
-            "mixed mushrooms": {
+            {
+                "name": "Mixed Mushrooms",
                 "amount": "8 oz",
                 "price": 4.25
             },
-            "fresh spinach": {
+            {
+                "name": "Fresh Spinach",
                 "amount": "3 cups",
                 "price": 2.25
             },
-            "heavy cream": {
+            {
+                "name": "Heavy Cream",
                 "amount": "1/2 cup",
                 "price": 1.80
             },
-            "parmesan cheese": {
+            {
+                "name": "Parmesan Cheese",
                 "amount": "1/2 cup grated",
                 "price": 3.50
             },
-            "garlic": {
+            {
+                "name": "Garlic",
                 "amount": "4 cloves",
                 "price": 0.60
             },
-            "olive oil": {
+            {
+                "name": "Olive Oil",
                 "amount": "2 tbsp",
                 "price": 1.20
             }
-        },
+        ],
         "steps": [
             "Step 1: Bring a large pot of salted water to boil. Cook pasta according to package directions.",
             "Step 2: Heat olive oil in a large skillet over medium heat. Add minced garlic and cook for 1 minute.",
@@ -103,8 +119,10 @@ const mockRecipes = {
             "diet": "vegetarian",
             "preferences": ["comfort food", "creamy", "mushroom"],
             "allergens": ["dairy"]
-        }
+        },
+        "summary": "This is a vegetarian pasta recipe that is easy to make and tastes great. It is a good option for a meal that is both healthy and delicious."
     }
+
 };
 
 // POST /recipes/generate - Generate a recipe (mock version for testing)
@@ -212,6 +230,7 @@ exports.getRecipeSuggestions = async (req, res) => {
         const suggestions = [
             {
                 "name": "Mediterranean Herb-Crusted Chicken",
+                "summary": "Tender chicken breast coated in aromatic Mediterranean herbs, pan-seared to golden perfection. Served with roasted vegetables and a light lemon-herb sauce.",
                 "description": "Healthy protein with fresh herbs and vegetables",
                 "estimatedCost": 15.50,
                 "difficulty": "medium",
@@ -219,6 +238,7 @@ exports.getRecipeSuggestions = async (req, res) => {
             },
             {
                 "name": "Creamy Mushroom and Spinach Pasta",
+                "summary": "Rich and comforting pasta featuring sautéed mushrooms and fresh spinach in a creamy garlic sauce. Perfect comfort food that's surprisingly easy to make.",
                 "description": "Comforting vegetarian pasta with rich flavors",
                 "estimatedCost": 16.10,
                 "difficulty": "easy",
@@ -233,6 +253,7 @@ exports.getRecipeSuggestions = async (req, res) => {
             },
             {
                 "name": "Grilled Salmon with Asparagus",
+                "summary": "Perfectly grilled salmon fillet with tender asparagus spears. Lightly seasoned with herbs and lemon for a fresh, healthy meal that's ready in minutes.",
                 "description": "Healthy protein with seasonal vegetables",
                 "estimatedCost": 18.75,
                 "difficulty": "medium",

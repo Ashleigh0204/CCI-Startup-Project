@@ -1,7 +1,7 @@
 const cors = require('cors');
 app.use(cors());#!/bin/bash
 
-echo "🔄 Testing Fixed User ID Consistency"
+echo "Testing Fixed User ID Consistency"
 echo "===================================="
 
 FIXED_USER_ID="507f1f77bcf86cd799439011"
@@ -29,9 +29,9 @@ test_user_id() {
     
     # Check if ID matches
     if [ "$USER_ID" = "$FIXED_USER_ID" ]; then
-        echo "✅ PASS - User ID: $USER_ID"
+        echo "PASS - User ID: $USER_ID"
     else
-        echo "❌ FAIL - Expected: $FIXED_USER_ID, Got: $USER_ID"
+        echo "FAIL - Expected: $FIXED_USER_ID, Got: $USER_ID"
     fi
     echo
 }
@@ -41,5 +41,5 @@ for i in {1..3}; do
     test_user_id $i
 done
 
-echo "🎯 Fixed User ID: $FIXED_USER_ID"
-echo "✅ All tests completed!"
+echo "Fixed User ID: $FIXED_USER_ID"
+echo "All tests completed!"

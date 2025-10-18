@@ -1,5 +1,6 @@
 import { frontendPath } from './config.js';
 import express from 'express';
+import cors from 'cors';
 import index from './endpoints/index.js';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
@@ -10,6 +11,14 @@ dotenv.config();
 //create app
 const app = express();
 
+app.use(cors({
+    origin: ['http://localhost:5173', 'http://127.0.0.1:5173'], 
+    credentials: true, 
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+}));
+
+app.use(express.json());
 
 const mongoUri = process.env.MONGO_URI;
 console.log(mongoUri);

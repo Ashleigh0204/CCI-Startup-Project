@@ -52,19 +52,28 @@ exports.generateRecipe = async (req, res) => {
             geminiPrompt += `\n- Meal Type: ${mealType}`;
         }
         
-        geminiPrompt += `\n\nPlease respond with a JSON object in the following exact format:
+        geminiPrompt += `\n\nCRITICAL: You MUST respond with a JSON object in the following EXACT format. The ingredients field MUST be an array, not an object:
+
 {
   "name": "Recipe Name",
-  "ingredients": {
-    "ingredient name": {
-      "amount": "amount needed",
-      "price": estimated_price_in_dollars
+  "summary": "A brief 200-character summary of what this recipe is about, including key flavors, cooking method, and appeal.",
+  "ingredients": [
+    {
+      "name": "Chicken Breast",
+      "amount": "2 lbs (4 breasts)",
+      "price": 8
     },
-    "another ingredient": {
-      "amount": "amount needed", 
-      "price": estimated_price_in_dollars
+    {
+      "name": "Quinoa",
+      "amount": "1 cup (uncooked)",
+      "price": 3
+    },
+    {
+      "name": "Black Beans (canned)",
+      "amount": "1 can (15 oz), rinsed and drained",
+      "price": 1
     }
-  },
+  ],
   "steps": [
     "Step 1: Detailed instruction",
     "Step 2: Detailed instruction",
@@ -78,13 +87,36 @@ exports.generateRecipe = async (req, res) => {
   }
 }
 
-Make sure to:
-1. Include realistic ingredient prices based on current market rates
-2. Provide detailed, step-by-step cooking instructions
-3. Consider the user's dietary preferences and restrictions
-4. Ensure the total cost is reasonable for the user's budget
-5. Include proper quantities for each ingredient
-6. Make the recipe practical and achievable`;
+MANDATORY REQUIREMENTS:
+1. The "ingredients" field MUST be an array of objects, NOT a key-value object
+2. Each ingredient object MUST have exactly these three fields: "name", "amount", "price"
+3. The "name" field should be a string (e.g., "Chicken Breast")
+4. The "amount" field should be a string with measurements (e.g., "2 lbs (4 breasts)")
+5. The "price" field should be a number (e.g., 8)
+6. Include realistic ingredient prices based on current market rates
+7. Provide detailed, step-by-step cooking instructions
+8. Consider the user's dietary preferences and restrictions
+9. Ensure the total cost is reasonable for the user's budget
+10. Include proper quantities for each ingredient with clear measurements
+11. Make the recipe practical and achievable
+12. The summary should highlight key flavors, cooking techniques, and what makes this recipe special
+
+DO NOT use this format for ingredients:
+{
+  "ingredient name": {
+    "amount": "amount needed",
+    "price": estimated_price_in_dollars
+  }
+}
+
+ONLY use this format for ingredients:
+[
+  {
+    "name": "ingredient name",
+    "amount": "amount needed", 
+    "price": estimated_price_in_dollars
+  }
+]`;
 
         // Generate recipe using Gemini
         const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
@@ -109,11 +141,31 @@ Make sure to:
             });
         }
         
+        // Convert ingredients from object to array format if needed
+        if (recipeData.ingredients && typeof recipeData.ingredients === 'object' && !Array.isArray(recipeData.ingredients)) {
+            console.log('Converting ingredients from object to array format...');
+            const ingredientsArray = Object.entries(recipeData.ingredients).map(([name, data]) => ({
+                name: name,
+                amount: data.amount || data.quantity || '1 unit',
+                price: typeof data.price === 'number' ? data.price : parseFloat(data.price) || 0
+            }));
+            recipeData.ingredients = ingredientsArray;
+        }
+        
         // Validate the recipe data structure
         if (!recipeData.name || !recipeData.ingredients || !recipeData.steps) {
             return res.status(500).json({
                 success: false,
                 message: 'Invalid recipe data structure from AI response',
+                rawResponse: text
+            });
+        }
+        
+        // Ensure ingredients is an array
+        if (!Array.isArray(recipeData.ingredients)) {
+            return res.status(500).json({
+                success: false,
+                message: 'Ingredients must be an array format',
                 rawResponse: text
             });
         }
@@ -180,12 +232,15 @@ exports.getRecipeSuggestions = async (req, res) => {
 [
   {
     "name": "Recipe Name",
+    "summary": "A brief 200-character summary highlighting key flavors, cooking method, and appeal",
     "description": "Brief description",
     "estimatedCost": estimated_cost,
     "difficulty": "easy/medium/hard",
     "cookingTime": "time estimate"
   }
-]`;
+]
+
+Make sure each suggestion includes a compelling 200-character summary that captures the essence of the recipe.`;
 
         const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
         const result = await model.generateContent(suggestionPrompt);

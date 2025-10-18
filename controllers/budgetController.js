@@ -191,6 +191,14 @@ exports.addSpending = async (req, res) => {
             });
         }
         
+        // Validate amount is not too large (prevent accidental huge amounts)
+        if (amount > 10000) {
+            return res.status(400).json({
+                success: false,
+                message: 'Amount cannot exceed $10,000. Please contact support for larger transactions.'
+            });
+        }
+        
         // Check if user exists
         const user = await User.findById(userId);
         if (!user) {
