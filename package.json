@@ -1,0 +1,18 @@
+{
+  "name": "cci-startup-project",
+  "version": "1.0.0",
+  "description": "Ashleigh, Hafsa, and Toya's project for the 2025 CCI Startup Hackathon",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "CCI-Startup-Project"
+  },
+  "author": "Ashleigh, Toya, Hafsa",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}
