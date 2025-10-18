@@ -60,7 +60,7 @@ const sampleRestaurants = [
         Wopen: '06:30', Wclose: '22:00',
         Ropen: '06:30', Rclose: '22:00',
         Fopen: '06:30', Fclose: '22:00',
-        Sopen: '06:30', Sclose: '22:00',
+        Sopen: '06:30', Sclose: '09:00',
         Uopen: 'closed', Uclose: 'closed'
     },
     {

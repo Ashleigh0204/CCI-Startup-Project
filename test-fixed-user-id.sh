@@ -1,4 +1,5 @@
-#!/bin/bash
+const cors = require('cors');
+app.use(cors());#!/bin/bash
 
 echo "🔄 Testing Fixed User ID Consistency"
 echo "===================================="
