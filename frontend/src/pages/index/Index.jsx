@@ -1,6 +1,7 @@
 import Container from "../components/Container/Container";
 import ContainerContent from "../components/Container/ContainerContent";
 import ContainerTitle from "../components/Container/ContainerTitle";
+import Budget from "./Budget";
 import RestaurantView from "./RestaurantView";
 
 export default function Index() {
@@ -37,6 +38,7 @@ let restaurantData =
 
 
     return (
+        <div>
         <Container className="max-h-[calc(100vh-11rem)] overflow-y-auto">
             <ContainerTitle>
                 Restaurants
@@ -47,5 +49,14 @@ let restaurantData =
                 )}
             </ContainerContent>
         </Container>
+        <Container className="max-h-50%">
+            <ContainerTitle>
+                Budget
+            </ContainerTitle>
+            <ContainerContent>
+                <Budget spent={3.04} budget={20.00} timeUnit="week"/>
+            </ContainerContent>
+        </Container>
+        </div>
     );
 }
