@@ -38,25 +38,35 @@ let restaurantData =
 
 
     return (
-        <div>
-        <Container className="max-h-[calc(100vh-11rem)] overflow-y-auto">
-            <ContainerTitle>
-                Restaurants
-            </ContainerTitle>
-            <ContainerContent>
-                {restaurantData.map(restaurant => 
-                    <RestaurantView title={restaurant.name} description={restaurant.description} isOpen={restaurant.isOpen} kwords={restaurant.keywords} nextTime={'10:00'}/>
-                )}
-            </ContainerContent>
-        </Container>
-        <Container className="max-h-50%">
-            <ContainerTitle>
-                Budget
-            </ContainerTitle>
-            <ContainerContent>
-                <Budget spent={3.04} budget={20.00} timeUnit="week"/>
-            </ContainerContent>
-        </Container>
+        <div className="grid grid-cols-2">
+            <Container className="max-h-[calc(100vh-11rem)] overflow-y-auto">
+                <ContainerTitle>
+                    Restaurants
+                </ContainerTitle>
+                <ContainerContent>
+                    {restaurantData.map(restaurant => 
+                        <RestaurantView title={restaurant.name} description={restaurant.description} isOpen={restaurant.isOpen} kwords={restaurant.keywords} nextTime={'10:00'}/>
+                    )}
+                </ContainerContent>
+            </Container>
+            <div className="grid grid-rows-2">
+                <Container className="max-h-60">
+                    <ContainerTitle>
+                        Budget
+                    </ContainerTitle>
+                    <ContainerContent>
+                        <Budget spent={3.04} budget={20.00} timeUnit="week"/>
+                    </ContainerContent>
+                </Container>
+                <Container className="max-h-40">
+                    <ContainerTitle>
+                        Recommendations
+                    </ContainerTitle>
+                    <ContainerContent>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus voluptates sed perferendis! Voluptatem, velit reprehenderit. Quo ab ullam quisquam, earum perferendis dolorum sed provident quidem. Ipsa nam adipisci odio suscipit?
+                    </ContainerContent>
+                </Container>
+            </div>
         </div>
     );
 }
