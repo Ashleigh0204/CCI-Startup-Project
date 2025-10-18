@@ -6,10 +6,14 @@ const UserData = require('./models/userData');
 const Transaction = require('./models/transactions');
 const Restaurant = require('./models/restaurants');
 
+// Fixed ObjectId for the first user (consistent across seeds)
+const FIXED_FIRST_USER_ID = new mongoose.Types.ObjectId('507f1f77bcf86cd799439011');
+
 // Sample data
 const sampleUsers = [
     {
-        username: 'john_doe',
+        _id: FIXED_FIRST_USER_ID,
+        username: 'norm_niner',
         passwordHash: bcrypt.hashSync('password123', 10)
     },
     {

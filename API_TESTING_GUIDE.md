@@ -113,13 +113,18 @@ All endpoints return JSON in this format:
 
 ## 🎯 Quick Test IDs
 
-To get test IDs, run:
-```bash
-# Get user ID
-curl -s http://127.0.0.1:8080/api/profile | jq '.data[0]._id'
+**Fixed Test User ID (consistent across seeds):**
+```
+507f1f77bcf86cd799439011
+```
 
+To get other IDs, run:
+```bash
 # Get restaurant ID
 curl -s http://127.0.0.1:8080/api/get_restaurants | jq '.data[0]._id'
+
+# Get all user IDs
+curl -s http://127.0.0.1:8080/api/profile | jq '.data[]._id'
 ```
 
 ## Automated Testing
