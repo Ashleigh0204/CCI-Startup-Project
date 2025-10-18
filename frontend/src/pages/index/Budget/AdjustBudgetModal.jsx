@@ -139,17 +139,7 @@ export default function AdjustBudgetModal({onRequestClose, onSubmit, cancel}) {
                         </p>
                     </div>
                     
-                    <div className="flex justify-end space-x-2 mt-6">
-                        <button
-                            type="button"
-                            onClick={onRequestClose}
-                            className="px-4 py-2 text-gray-600 border border-gray-300 rounded hover:bg-gray-50"
-                            disabled={isSubmitting}
-                        >
-                            Cancel
-                        </button>
-
-                    </div>
+                    
                 </form>
             </ModalContent>
         </Modal>
