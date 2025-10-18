@@ -1,11 +1,15 @@
-const express = require('express');
-const index = require('./endpoints/index');
-const dotenv = require('dotenv');
-dotenv.config();
-const mongoose = require('mongoose');
-const { seedDatabase } = require('./seed');
+import { frontendPath } from './config.js';
+import express from 'express';
+import index from './endpoints/index.js';
+import dotenv from 'dotenv';
+import mongoose from 'mongoose';
+import {seedDatabase} from './seed.js';
 
+dotenv.config();
+
+//create app
 const app = express();
+
 
 const mongoUri = process.env.MONGO_URI;
 console.log(mongoUri);
@@ -32,6 +36,9 @@ mongoose.connect(mongoUri, {
 //set up host and port
 const hostname = '127.0.0.1';
 const port = 8080;
+
+//set up frontend
+app.use(express.static(frontendPath));
 
 //set up routes
 app.use('/', index);
