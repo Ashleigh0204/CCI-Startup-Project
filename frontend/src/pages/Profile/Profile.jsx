@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
-import Container from "./components/Container/Container";
-import ContainerContent from "./components/Container/ContainerContent";
-import ContainerTitle from "./components/Container/ContainerTitle";
-import Button from "./components/Button";
+import Container from '../../components/Container/Container';
+import ContainerContent from "../../components/Container/ContainerContent";
+import ContainerTitle from '../../components/Container/ContainerTitle';
+import Button from "../../components/Button";
 
 export default function Profile() {
     const [userData, setUserData] = useState(null);

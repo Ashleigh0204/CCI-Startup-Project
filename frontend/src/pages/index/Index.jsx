@@ -1,9 +1,9 @@
-import Container from "../components/Container/Container";
-import ContainerContent from "../components/Container/ContainerContent";
-import ContainerTitle from "../components/Container/ContainerTitle";
+import Container from "../../components/Container/Container"
+import ContainerContent from "../../components/Container/ContainerContent";
+import ContainerTitle from "../../components/Container/ContainerTitle";
 import Budget from "./Budget/Budget";
 import RestaurantView from "./RestaurantView";
-import FilterBar from "../components/FilterBar";
+import FilterBar from "../../components/FilterBar";
 import Recipe from "./Recipe/Recipe";
 import { useState, useEffect, useMemo } from 'react';
 

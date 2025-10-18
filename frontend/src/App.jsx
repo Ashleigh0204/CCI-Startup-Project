@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import Header from './pages/components/Header'
-import Footer from './pages/components/Footer'
-import Index from './pages/index/Index'
-import Profile from './pages/Profile'
+import Header from './pages/Components/Header'
+import Footer from './pages/Components/Footer'
+import Index from './pages/Index/Index.jsx'
+import Profile from './pages/Profile/Profile.jsx'
 
 export default function App() {
   const [currentPage, setCurrentPage] = useState('home');

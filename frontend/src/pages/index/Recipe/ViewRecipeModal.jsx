@@ -1,6 +1,6 @@
-import Modal from "../../components/Modal/Modal";
-import ModalContent from "../../components/Modal/ModalContent";
-import ModalTitle from "../../components/Modal/ModalTitle";
+import Modal from "../../../components/Modal/Modal"
+import ModalContent from "../../../components/Modal/ModalContent";
+import ModalTitle from "../../../components/Modal/ModalTitle";
 
 export default function ViewRecipeModal({onRequestClose, onSubmit, cancel, recipe}) {
     return (

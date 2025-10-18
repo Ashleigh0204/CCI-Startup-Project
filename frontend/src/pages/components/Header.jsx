@@ -1,10 +1,7 @@
 import { useState, useEffect } from 'react';
 
-export default function Header({ onNavigate, currentPage }) {
+export default function Header() {
     const [userData, setUserData] = useState(null);
-    
-    // Debug logging
-    console.log('Header props:', { onNavigate, currentPage });
     
     useEffect(() => {
         const FIXED_USER_ID = '507f1f77bcf86cd799439011';
@@ -48,41 +45,7 @@ export default function Header({ onNavigate, currentPage }) {
                         <img src="/logo.png" className="h-20"/>
                             Forty Knives and Forks
                     </div>
-                    <div className="flex items-center space-x-4">
-                        <button
-                            onClick={() => {
-                                console.log('Home button clicked');
-                                if (onNavigate) {
-                                    onNavigate('home');
-                                } else {
-                                    console.error('onNavigate function not provided');
-                                }
-                            }}
-                            className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-                                currentPage === 'home' 
-                                    ? 'bg-white text-black' 
-                                    : 'text-gray-300 hover:text-white hover:bg-gray-700'
-                            }`}
-                        >
-                            Home
-                        </button>
-                        <button
-                            onClick={() => {
-                                console.log('Profile button clicked');
-                                if (onNavigate) {
-                                    onNavigate('profile');
-                                } else {
-                                    console.error('onNavigate function not provided');
-                                }
-                            }}
-                            className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-                                currentPage === 'profile' 
-                                    ? 'bg-white text-black' 
-                                    : 'text-gray-300 hover:text-white hover:bg-gray-700'
-                            }`}
-                        >
-                            Profile
-                        </button>
+                    <div className="flex items-center">
                         <img src="/profile.jpg" className="h-16 rounded-full"/>
                         <div className="pl-5">{userData?.user_id?.username || 'Loading...'}</div>
                     </div>

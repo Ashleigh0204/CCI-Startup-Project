@@ -1,6 +1,6 @@
-import Modal from "../../components/Modal/Modal"
-import ModalTitle from "../../components/Modal/ModalTitle"
-import ModalContent from "../../components/Modal/ModalContent"
+import Modal from "../../../components/Modal/Modal"
+import ModalTitle from "../../../components/Modal/ModalTitle"
+import ModalContent from "../../../components/Modal/ModalContent"
 import { useState, useEffect } from "react"
 export default function AdjustBudgetModal({onRequestClose, onSubmit, cancel}) {
     const [formData, setFormData] = useState({
