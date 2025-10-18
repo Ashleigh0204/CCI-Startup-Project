@@ -1,7 +1,7 @@
-import Modal from "../components/Modal/Modal";
-import ModalContent from "../components/Modal/ModalContent";
+import Modal from "../../components/Modal/Modal";
+import ModalContent from "../../components/Modal/ModalContent";
 import ModalTitle
- from "../components/Modal/ModalTitle";
+ from "../../components/Modal/ModalTitle";
 export default function ViewTransactionModal({onRequestClose, onSubmit, cancel}) {
     return (
         <Modal onRequestClose={onRequestClose} onSubmit={onSubmit} cancel={cancel}>

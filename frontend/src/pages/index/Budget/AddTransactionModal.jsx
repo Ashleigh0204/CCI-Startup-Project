@@ -1,6 +1,6 @@
-import Modal from "../components/Modal/Modal"
-import ModalTitle from "../components/Modal/ModalTitle"
-import ModalContent from "../components/Modal/ModalContent"
+import Modal from "../../components/Modal/Modal"
+import ModalTitle from "../../components/Modal/ModalTitle"
+import ModalContent from "../../components/Modal/ModalContent"
 export default function AdjustBudgetModal({onRequestClose, onSubmit, cancel, locations}) {
     return (
         <Modal onRequestClose={onRequestClose} onSubmit={onSubmit} cancel={cancel}>
