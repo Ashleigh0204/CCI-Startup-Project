@@ -3,6 +3,7 @@ import express from 'express';
 import index from './endpoints/index.js';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
+import seed from './seed.js';
 
 dotenv.config();
 
@@ -16,14 +17,21 @@ mongoose.connect(mongoUri, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 })
-.then(() => {
+.then(async () => {
     console.log('Connected to MongoDB successfully');
+    
+    // Seed database 
+    try {
+        await seedDatabase();
+    } catch (error) {
+        console.error('Failed to seed database:', error);
+        process.exit(1);
+    }
 })
 .catch(err => {
     console.error('MongoDB connection error:', err.message);
     console.error('Full error:', err);
 });
-
 
 //set up host and port
 const hostname = '127.0.0.1';
