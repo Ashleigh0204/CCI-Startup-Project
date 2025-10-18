@@ -1,6 +1,6 @@
-import Modal from "../components/Modal/Modal"
-import ModalTitle from "../components/Modal/ModalTitle"
-import ModalContent from "../components/Modal/ModalContent"
+import Modal from "../../components/Modal/Modal"
+import ModalTitle from "../../components/Modal/ModalTitle"
+import ModalContent from "../../components/Modal/ModalContent"
 import { useState, useEffect } from "react"
 
 export default function AddTransactionModal({onRequestClose, onSubmit, cancel, locations}) {
@@ -82,7 +82,6 @@ export default function AddTransactionModal({onRequestClose, onSubmit, cancel, l
             setIsSubmitting(false);
         }
     };
-
     return (
         <Modal onRequestClose={onRequestClose} onSubmit={handleSubmit} cancel={cancel}>
             <ModalTitle>

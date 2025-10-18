@@ -1,4 +1,4 @@
-import Button from "../components/Button"
+import Button from "../../components/Button"
 import { useState, useEffect } from "react"
 import ViewTransactionModal from "./ViewTransactionModal";
 import AdjustBudgetModal from "./AdjustBudgetModal";
