@@ -1,29 +1,32 @@
 const express = require('express');
 const controller = require('../controllers/index');
-const restaurants = require('./restaurants');
-const transactions = require('./transactions');
 
 //create router
 const router = express.Router();
 
-// GET / => display index page
-router.get('/', controller.index);
+// Middleware to parse JSON bodies
+router.use(express.json());
 
-// mount restaurants router
-router.get('/get_restaurants', getAllRestaurants);
+// Restaurant endpoints
+router.get('/get_restaurants', controller.getAllRestaurants);
+router.get('/get_filtered-restaurant', controller.searchRestaurants);
+router.get('/restaurants/open', controller.getOpenRestaurants);
 
-// mount transactions router
-router.get('/transactions', getAllTransactions);
+// Transaction endpoints
+router.get('/transactions', controller.getAllTransactions);
+router.post('/transactions', controller.createTransaction);
 
+// Budget endpoints
+router.post('/budget', controller.addSpending);
+router.get('/budget/:userId', controller.getUserBudget);
+router.put('/budget/:userId', controller.updateUserBudget);
 
-router.post('/budget', addSpending);
+// Recipe endpoints
+router.get('/recipe', controller.getRecipeSuggestions);
+router.post('/recipe', controller.generateRecipe);
 
-// new recipe endpoints
-router.get('/recipe', getRecipeSuggestions);
-router.post('recipe', generateRecipe);
+// User profile endpoints
+router.get('/profile', controller.getAllUsers);
+router.post('/profile', controller.createUser);
 
-// user profile endpoints
-router.get('profile', getUser);
-router.post('profile', updateUser);
-
-module.exports = router
+module.exports = router;
