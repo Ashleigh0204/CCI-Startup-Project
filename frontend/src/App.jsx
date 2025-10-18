@@ -1,0 +1,16 @@
+import Header from './pages/components/Header'
+import Footer from './pages/components/Footer'
+import Index from './pages/index'
+
+export default function App() {
+
+  return (
+    <div className='flex flex-col h-screen'>
+      <Header />
+      <main className='flex-grow'>
+        <Index />
+      </main>
+      <Footer />
+    </div>
+  )
+}
