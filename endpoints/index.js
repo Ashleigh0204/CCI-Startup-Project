@@ -1,17 +1,17 @@
 const express = require('express');
 const controller = require('../controllers/index');
-const restaurants = require('./restaurants');
-const transactions = require('./transactions');
+const api = require('./api');
 
 //create router
 const router = express.Router();
 
+// Middleware to parse JSON bodies
+router.use(express.json());
+
 // GET / => display index page
 router.get('/', controller.index);
 
-// mount restaurants router
-router.use('/api', restaurants);
+// mount API router
+router.use('/api', api);
 
-
-
-module.exports = router
+module.exports = router;
