@@ -3,7 +3,7 @@ import express from 'express';
 import index from './endpoints/index.js';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
-import seed from './seed.js';
+import {seedDatabase} from './seed.js';
 
 dotenv.config();
 
