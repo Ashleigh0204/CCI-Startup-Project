@@ -15,6 +15,7 @@ router.get('/restaurants/open', controller.getOpenRestaurants);
 // Transaction endpoints
 router.get('/transactions', controller.getAllTransactions);
 router.post('/transactions', controller.createTransaction);
+router.delete('/transactions/:id', controller.deleteTransaction);
 
 // Budget endpoints
 router.post('/budget', controller.addSpending);

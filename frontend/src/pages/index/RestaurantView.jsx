@@ -8,7 +8,7 @@ export default function RestaurantView({title, description, isOpen, nextTime, kw
             <p>{description}</p>
             <p>{kwords.join (", ")}</p>
             {isOpen ? <p>Open now!</p> : <p>Closed</p>}
-            {isOpen ? <p>Closes at {nextTime.toLocaleString()}</p> : <p>Opens at {nextTime.toLocaleString()}</p>}
+            {isOpen ? <p>Closes at {nextTime}</p> : <p>Opens at {nextTime}</p>}
         </div>
     )
 }
