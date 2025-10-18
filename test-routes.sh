@@ -35,14 +35,9 @@ test_endpoint() {
     echo
 }
 
-# Get a user ID for testing
-echo "Getting test user ID..."
-USER_ID=$(curl -s "$BASE_URL/profile" | jq -r '.data[0]._id' 2>/dev/null)
-if [ "$USER_ID" = "null" ] || [ -z "$USER_ID" ]; then
-    echo -e "${RED} Could not get user ID${NC}"
-    exit 1
-fi
-echo -e "${GREEN} Using user ID: $USER_ID${NC}"
+# Use fixed user ID for testing (consistent across seeds)
+USER_ID="507f1f77bcf86cd799439011"
+echo -e "${GREEN} Using fixed user ID: $USER_ID${NC}"
 echo
 
 # Test Restaurant Endpoints
