@@ -4,7 +4,9 @@
   "description": "Ashleigh, Hafsa, and Toya's project for the 2025 CCI Startup Hackathon",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "seed": "node runSeed.js",
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
@@ -13,6 +15,7 @@
   "author": "Ashleigh, Toya, Hafsa",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^6.0.0",
     "dotenv": "^17.2.3",
     "express": "^5.1.0",
     "mongodb": "^6.20.0",
