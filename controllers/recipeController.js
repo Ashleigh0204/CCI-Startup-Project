@@ -59,19 +59,19 @@ exports.generateRecipe = async (req, res) => {
   "summary": "A brief 200-character summary of what this recipe is about, including key flavors, cooking method, and appeal.",
   "ingredients": [
     {
-      "name": "Chicken Breast",
-      "amount": "2 lbs (4 breasts)",
-      "price": 8
+      "name": "Food Item 1",
+      "amount": "Amount of the food item",
+      "price": Price of the food item
     },
     {
-      "name": "Quinoa",
-      "amount": "1 cup (uncooked)",
-      "price": 3
+      "name": "Food Item 2",
+      "amount": "Amount of the food item",
+      "price": Price of the food item
     },
     {
-      "name": "Black Beans (canned)",
-      "amount": "1 can (15 oz), rinsed and drained",
-      "price": 1
+      "name": "Food Item 3",
+      "amount": "Amount of the food item",
+      "price": Price of the food item
     }
   ],
   "steps": [
@@ -90,7 +90,7 @@ exports.generateRecipe = async (req, res) => {
 MANDATORY REQUIREMENTS:
 1. The "ingredients" field MUST be an array of objects, NOT a key-value object
 2. Each ingredient object MUST have exactly these three fields: "name", "amount", "price"
-3. The "name" field should be a string (e.g., "Chicken Breast")
+3. The "name" field should be a string (e.g., "Food Item 1")
 4. The "amount" field should be a string with measurements (e.g., "2 lbs (4 breasts)")
 5. The "price" field should be a number (e.g., 8)
 6. Include realistic ingredient prices based on current market rates
@@ -100,6 +100,9 @@ MANDATORY REQUIREMENTS:
 10. Include proper quantities for each ingredient with clear measurements
 11. Make the recipe practical and achievable
 12. The summary should highlight key flavors, cooking techniques, and what makes this recipe special
+13. Keep in the mind the ingredients that I provided in the prompt are just an example, you can use other ingredients that are not in the prompt but are related to the prompt. Also make sure the ingredients are realistic and achievable, and make sure to take into account the user's dietary preferences and restrictions.
+14. Do not only use chicken emphasize on using other ingredients that are not in the prompt but are related to the prompt.
+
 
 DO NOT use this format for ingredients:
 {
@@ -116,7 +119,10 @@ ONLY use this format for ingredients:
     "amount": "amount needed", 
     "price": estimated_price_in_dollars
   }
-]`;
+]
+
+  
+`;
 
         // Generate recipe using Gemini
         const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
