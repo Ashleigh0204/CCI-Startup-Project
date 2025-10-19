@@ -1,5 +1,5 @@
-const express = require('express');
-const controller = require('../controllers/index');
+import express from 'express';
+import controller from '../controllers/index.js';
 
 //create router
 const router = express.Router();
@@ -21,6 +21,8 @@ router.delete('/transactions/:id', controller.deleteTransaction);
 router.post('/budget', controller.addSpending);
 router.get('/budget/:userId', controller.getUserBudget);
 router.put('/budget/:userId', controller.updateUserBudget);
+// Budget insights & recommendations
+router.get('/budget/:userId/insights', controller.getBudgetInsights);
 
 // Recipe endpoints
 router.get('/recipe', controller.getRecipeSuggestions);
@@ -38,4 +40,4 @@ router.put('/userdata/:id', controller.updateUserData);
 router.delete('/userdata/:id', controller.deleteUserData);
 router.get('/userdata/user/:userId', controller.getUserDataByUserId);
 
-module.exports = router;
+export default router;

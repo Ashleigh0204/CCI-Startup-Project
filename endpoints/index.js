@@ -1,6 +1,6 @@
-const express = require('express');
-const controller = require('../controllers/index');
-const api = require('./api');
+import express from 'express';
+import controller from '../controllers/index.js';
+import api from './api.js';
 
 //create router
 const router = express.Router();
@@ -14,4 +14,4 @@ router.get('/', controller.index);
 // mount API router
 router.use('/api', api);
 
-module.exports = router;
+export default router;
