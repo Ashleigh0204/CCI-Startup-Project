@@ -115,9 +115,9 @@ export default function Profile() {
         }
     };
 
-    const handleBudgetUpdated = () => {
+    const handleBudgetUpdated = async () => {
         // Refresh user data when budget is updated from modal
-        fetchUserData();
+        await fetchUserData();
     };
 
     if (loading) {
@@ -315,7 +315,7 @@ export default function Profile() {
                     onRequestClose={() => setAdjustBudgetModalOpen(false)} 
                     onSubmit={() => {
                         setAdjustBudgetModalOpen(false);
-                        handleBudgetUpdated();
+                        window.location.reload();
                     }} 
                     cancel={true} 
                 />

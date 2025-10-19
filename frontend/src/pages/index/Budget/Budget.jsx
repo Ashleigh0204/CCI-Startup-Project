@@ -55,14 +55,14 @@ export default function Budget() {
         }
     };
 
-    const handleTransactionAdded = () => {
+    const handleTransactionAdded = async () => {
         // Refresh budget data when a new transaction is added
-        fetchBudgetData();
+        await fetchBudgetData();
     };
 
-    const handleBudgetUpdated = () => {
+    const handleBudgetUpdated = async () => {
         // Refresh budget data when budget is updated
-        fetchBudgetData();
+        await fetchBudgetData();
     };
 
     if (loading) {
@@ -145,7 +145,7 @@ export default function Budget() {
                     onRequestClose={() => setAdjustBudgetModalOpen(false)} 
                     onSubmit={() => {
                         setAdjustBudgetModalOpen(false);
-                        handleBudgetUpdated();
+                        window.location.reload();
                     }} 
                     cancel={true} 
                 />
@@ -155,7 +155,7 @@ export default function Budget() {
                     onRequestClose={() => setAddTransactionModalOpen(false)} 
                     onSubmit={() => {
                         setAddTransactionModalOpen(false);
-                        handleTransactionAdded();
+                        window.location.reload();
                     }} 
                     cancel={true} 
                     locations={restaurantNames} 

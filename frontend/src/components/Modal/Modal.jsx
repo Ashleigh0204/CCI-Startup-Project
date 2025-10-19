@@ -1,5 +1,5 @@
 import Button from "../Button";
-export default function Modal({onRequestClose, onSubmit, cancel, children}) {
+export default function Modal({onRequestClose, onSubmit, cancel, children, submitText = "OK"}) {
     return (
         <div className="fixed inset-0 z-40 flex items-center justify-center bg-black bg-opacity-50">
       <div className="bg-white rounded-lg shadow-lg max-w-2xl w-full p-6 relative z-50">            
@@ -12,7 +12,7 @@ export default function Modal({onRequestClose, onSubmit, cancel, children}) {
             {children}
             <div className={`flex mt-4 ${cancel ? "justify-between" : "justify-end"}`}>
                 {cancel && <Button variant="outline" className="" onClick={onRequestClose}>Cancel</Button> }
-                <Button variant="primary" onClick={onSubmit}>OK</Button>
+                <Button variant="primary" onClick={onSubmit}>{submitText}</Button>
             </div>
         </div>
         </div>

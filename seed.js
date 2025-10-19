@@ -98,6 +98,42 @@ const sampleRestaurants = [
         Fopen: '08:00', Fclose: '22:00',
         Sopen: '08:00', Sclose: '22:00',
         Uopen: '08:00', Uclose: '22:00'
+    },
+    {
+        name: 'Trader Joe\'s',
+        description: 'Unique grocery store with specialty items and organic products',
+        keywords: ['groceries', 'organic', 'specialty', 'unique products'],
+        Mopen: '08:00', Mclose: '21:00',
+        Topen: '08:00', Tclose: '21:00',
+        Wopen: '08:00', Wclose: '21:00',
+        Ropen: '08:00', Rclose: '21:00',
+        Fopen: '08:00', Fclose: '21:00',
+        Sopen: '08:00', Sclose: '21:00',
+        Uopen: '08:00', Uclose: '21:00'
+    },
+    {
+        name: 'Safeway',
+        description: 'Full-service grocery store with pharmacy and deli',
+        keywords: ['groceries', 'pharmacy', 'deli', 'full service'],
+        Mopen: '06:00', Mclose: '23:00',
+        Topen: '06:00', Tclose: '23:00',
+        Wopen: '06:00', Wclose: '23:00',
+        Ropen: '06:00', Rclose: '23:00',
+        Fopen: '06:00', Fclose: '23:00',
+        Sopen: '06:00', Sclose: '23:00',
+        Uopen: '07:00', Uclose: '22:00'
+    },
+    {
+        name: 'Costco',
+        description: 'Wholesale club with bulk groceries and household items',
+        keywords: ['groceries', 'bulk', 'wholesale', 'membership'],
+        Mopen: '10:00', Mclose: '20:30',
+        Topen: '10:00', Tclose: '20:30',
+        Wopen: '10:00', Wclose: '20:30',
+        Ropen: '10:00', Rclose: '20:30',
+        Fopen: '10:00', Fclose: '20:30',
+        Sopen: '09:30', Sclose: '20:30',
+        Uopen: '10:00', Uclose: '19:00'
     }
 ];
 
