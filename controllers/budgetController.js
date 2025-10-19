@@ -26,7 +26,8 @@ exports.getUserBudget = async (req, res) => {
         }
         
         // Calculate current spending for the time period
-        const now = new Date();
+        // For testing purposes, use October 19, 2024 as "now"
+        const now = new Date('2024-10-19T12:00:00Z');
         let startDate;
         
         switch (userData.timeUnit) {
@@ -35,7 +36,9 @@ exports.getUserBudget = async (req, res) => {
                 break;
             case 'weekly':
                 const dayOfWeek = now.getDay();
-                startDate = new Date(now.getTime() - (dayOfWeek * 24 * 60 * 60 * 1000));
+                // Calculate start of current week (Sunday = 0)
+                startDate = new Date(now);
+                startDate.setDate(now.getDate() - dayOfWeek);
                 startDate.setHours(0, 0, 0, 0);
                 break;
             case 'monthly':
@@ -256,7 +259,8 @@ exports.getSpendingHistory = async (req, res) => {
         }
         
         // Calculate date range based on period
-        const now = new Date();
+        // For testing purposes, use October 19, 2024 as "now"
+        const now = new Date('2024-10-19T12:00:00Z');
         let startDate;
         
         switch (period) {
@@ -265,7 +269,9 @@ exports.getSpendingHistory = async (req, res) => {
                 break;
             case 'weekly':
                 const dayOfWeek = now.getDay();
-                startDate = new Date(now.getTime() - (dayOfWeek * 24 * 60 * 60 * 1000));
+                // Calculate start of current week (Sunday = 0)
+                startDate = new Date(now);
+                startDate.setDate(now.getDate() - dayOfWeek);
                 startDate.setHours(0, 0, 0, 0);
                 break;
             case 'monthly':

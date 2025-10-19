@@ -9,7 +9,7 @@ async function runSeed() {
     try {
         console.log('Connecting to MongoDB...');
         
-        const mongoUri = process.env.MONGO_URI;
+        const mongoUri = process.env.MONGO_URI || 'mongodb://localhost:27017/cci-startup-project';
         if (!mongoUri) {
             throw new Error('MONGO_URI not found in environment variables');
         }

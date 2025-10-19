@@ -161,24 +161,49 @@ const sampleUserData = [
     },
 ];
 
-// Sample transactions will be created after restaurants are inserted
-const sampleTransactions = [
-    {
-        amount: 25.50
-    },
-    {
-        amount: 12.99
-    },
-    {
-        amount: 45.75
-    },
-    {
-        amount: 8.50
-    },
-    {
-        amount: 32.00
+// Sample transactions with historical data
+const generateHistoricalTransactions = () => {
+    const transactions = [];
+    
+    // Set cutoff date to October 11th
+    const cutoffDate = new Date('2024-10-11T00:00:00Z');
+    
+    // Generate transactions from September 1st to October 11th
+    const startDate = new Date('2024-09-01T00:00:00Z');
+    const endDate = new Date('2024-10-11T23:59:59Z');
+    
+    // Generate 15-20 transactions over this period
+    const numTransactions = Math.floor(Math.random() * 6) + 15; // 15-20 transactions
+    
+    for (let i = 0; i < numTransactions; i++) {
+        // Random time between start date and end date
+        const randomTime = startDate.getTime() + Math.random() * (endDate.getTime() - startDate.getTime());
+        const transactionDate = new Date(randomTime);
+        
+        // Random time during the day (8 AM to 10 PM)
+        transactionDate.setHours(Math.floor(Math.random() * 14) + 8);
+        transactionDate.setMinutes(Math.floor(Math.random() * 60));
+        
+        transactions.push({
+            amount: Math.round((Math.random() * 30 + 5) * 100) / 100, // $5-$35 (reduced max)
+            createdAt: transactionDate,
+            updatedAt: transactionDate
+        });
     }
-];
+    
+    // Add 1 transaction specifically for October 19th
+    const october19Date = new Date('2024-10-19T12:00:00Z'); // October 19th at noon
+    
+    transactions.push({
+        amount: Math.round((Math.random() * 25 + 8) * 100) / 100, // $8-$33
+        createdAt: october19Date,
+        updatedAt: october19Date
+    });
+    
+    return transactions.sort((a, b) => a.createdAt - b.createdAt);
+};
+
+const sampleTransactions = generateHistoricalTransactions();
 
 async function seedDatabase() {
     try {
@@ -193,6 +218,8 @@ async function seedDatabase() {
         
         console.log('Creating users...');
         const createdUsers = await User.insertMany(sampleUsers);
+        console.log('Created users:', createdUsers.length);
+        console.log('First user ID:', createdUsers[0]._id.toString());
         
         
         console.log('Creating user data...');
@@ -207,15 +234,41 @@ async function seedDatabase() {
         const createdRestaurants = await Restaurant.insertMany(sampleRestaurants);
         
         console.log('Creating transactions...');
-        const transactionsWithIds = sampleTransactions.map((transaction, index) => ({
-            ...transaction,
-            user_id: createdUsers[index % createdUsers.length]._id,
-            location: createdRestaurants[index % createdRestaurants.length]._id
-        }));
+        const transactionsWithIds = [];
+        
+        // Distribute transactions more evenly across users
+        for (let index = 0; index < sampleTransactions.length; index++) {
+            const transaction = sampleTransactions[index];
+            const userId = createdUsers[index % createdUsers.length]._id;
+            const restaurantId = createdRestaurants[index % createdRestaurants.length]._id;
+            const restaurant = createdRestaurants[index % createdRestaurants.length];
+            
+            // Skip Whole Foods transactions for the fixed user
+            if (userId.toString() === FIXED_FIRST_USER_ID.toString() && 
+                restaurant.name === 'Whole Foods') {
+                continue; // Skip this transaction
+            }
+            
+            // Check if this is the October 19th transaction and assign it to the fixed user
+            const transactionDate = new Date(transaction.createdAt);
+            const isOctober19 = transactionDate.getMonth() === 9 && transactionDate.getDate() === 19; // October is month 9 (0-indexed)
+            
+            const finalUserId = isOctober19 ? FIXED_FIRST_USER_ID : userId;
+            
+            transactionsWithIds.push({
+                amount: transaction.amount,
+                user_id: finalUserId,
+                location: restaurantId,
+                createdAt: transaction.createdAt,
+                updatedAt: transaction.updatedAt
+            });
+        }
+        
         await Transaction.insertMany(transactionsWithIds);
+        console.log('Inserted transactions:', transactionsWithIds.length);
         
         console.log('Database seeded successfully!');
-        console.log(`Created: ${createdUsers.length} users, ${sampleUserData.length} user data records, ${sampleRestaurants.length} restaurants, ${sampleTransactions.length} transactions`);
+        console.log(`Created: ${createdUsers.length} users, ${sampleUserData.length} user data records, ${sampleRestaurants.length} restaurants, ${transactionsWithIds.length} transactions`);
         
     } catch (error) {
         console.error('Error seeding database:', error);
