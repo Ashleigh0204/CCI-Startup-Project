@@ -11,8 +11,8 @@ export default function Modal({onRequestClose, onSubmit, cancel, children}) {
         </button>
             {children}
             <div className={`flex mt-4 ${cancel ? "justify-between" : "justify-end"}`}>
-                {cancel && <Button className="bg-white border border-gray-200 text-gray-400 hover:bg-gray-200" onClick={onRequestClose}>Cancel</Button> }
-                <Button onClick={onSubmit}>OK</Button>
+                {cancel && <Button variant="outline" className="" onClick={onRequestClose}>Cancel</Button> }
+                <Button variant="primary" onClick={onSubmit}>OK</Button>
             </div>
         </div>
         </div>

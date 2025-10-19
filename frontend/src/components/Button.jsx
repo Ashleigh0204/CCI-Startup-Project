@@ -1,5 +1,8 @@
-export default function Button({children,className="", ...props}) {
+export default function Button({variant, children,className="", ...props}) {
+    let style_class=""
+    if (variant=='outline') style_class = "bg-white borderbg-white border border-gray-200 text-gray-400 hover:bg-gray-200"
+    else if (variant=='primary') style_class = "bg-green-800 hover:bg-green-700 text-white"
     return (
-        <button className={`bg-green-800 hover:bg-green-700 text-white font-bold py-2 px-4 rounded ${className}`} {...props}>{children}</button>
+        <button className={` py-2 px-4 rounded ${className} ${style_class}`} {...props}>{children}</button>
     )
 }

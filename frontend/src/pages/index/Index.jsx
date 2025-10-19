@@ -241,7 +241,7 @@ export default function Index() {
                       Recommendations
                   </ContainerTitle>
                   <ContainerContent>
-                      <Recipe recipe={recipe} />
+                      <Recipe />
                   </ContainerContent>
               </Container>
           </div>
