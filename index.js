@@ -5,7 +5,6 @@ import index from './endpoints/index.js';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import {seedDatabase} from './seed.js';
-import timeout from "connect-timeout";
 
 dotenv.config();
 
@@ -18,8 +17,6 @@ app.use(cors({
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization']
 }));
-
-app.use(timeout('120s'));
 
 app.use(express.json());
 
