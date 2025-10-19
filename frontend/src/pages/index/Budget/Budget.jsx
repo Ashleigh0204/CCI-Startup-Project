@@ -114,13 +114,13 @@ export default function Budget() {
             </div>
             
             <div className="flex justify-center">
-                <Button className="w-full m-5" onClick={() => setAddTransactionModalOpen(true)}>
+                <Button variant="primary" className="w-full m-5" onClick={() => setAddTransactionModalOpen(true)}>
                     Add Transaction
                 </Button>
             </div>
             <div className="flex justify-between mt-3">
-                <Button onClick={() => setViewTransactionModalOpen(true)}>View Transactions</Button>
-                <Button onClick={() => setAdjustBudgetModalOpen(true)}>Adjust Budget</Button>
+                <Button variant="primary" onClick={() => setViewTransactionModalOpen(true)}>View Transactions</Button>
+                <Button variant="primary" onClick={() => setAdjustBudgetModalOpen(true)}>Adjust Budget</Button>
             </div>
             
             {viewTransactionsModalOpen && (

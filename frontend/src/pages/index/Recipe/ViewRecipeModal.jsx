@@ -8,7 +8,7 @@ export default function ViewRecipeModal({onRequestClose, onSubmit, cancel, recip
             <ModalTitle>
                 {recipe.name}
             </ModalTitle>
-            <ModalContent>
+            <ModalContent className="max-h-80 overflow-y-auto">
                 <h2 className="font-bold">Ingredients:</h2>
                 <ul>
                     {recipe.ingredients.map((item, key) => <li key={key}>{item.amount} {item.name}</li>)}

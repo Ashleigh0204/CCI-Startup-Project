@@ -197,7 +197,7 @@ ONLY use this format for ingredients:
 // GET /recipes/suggestions - Get recipe suggestions based on user preferences
 exports.getRecipeSuggestions = async (req, res) => {
     try {
-        const { userId, limit = 3 } = req.query;
+        const { userId, limit = 1 } = req.query;
         
         if (!userId) {
             return res.status(400).json({
