@@ -70,12 +70,12 @@ export default function ViewTransactionModal({onRequestClose, onSubmit, cancel})
                     </div>
                 ) : (
                     <div>
-                        <div className="bg-blue-50 border border-blue-200 rounded p-4 mb-4">
+                        <div className="bg-green-50 border border-green-200 rounded p-4 mb-4">
                             <div className="flex justify-between items-center">
-                                <span className="font-semibold text-blue-800">Total Spent:</span>
-                                <span className="text-lg font-bold text-blue-900">{formatAmount(totalSpent)}</span>
+                                <span className="font-semibold text-green-800">Total Spent:</span>
+                                <span className="text-lg font-bold text-green-900">{formatAmount(totalSpent)}</span>
                             </div>
-                            <div className="text-sm text-blue-700 mt-1">
+                            <div className="text-sm text-green-700 mt-1">
                                 {transactions.length} transaction{transactions.length !== 1 ? 's' : ''}
                             </div>
                         </div>

@@ -13,9 +13,11 @@ export default function ViewRecipeModal({onRequestClose, onSubmit, cancel, recip
                 <ul>
                     {recipe.ingredients.map((item, key) => <li key={key}>{item.amount} {item.name}</li>)}
                 </ul>
+                <div className="border-t border-gray-200 mt-4 pt-2">
                 <h2 className="font-bold">Steps:</h2>
                 <div>
                     {recipe.steps.map((item,key) => <div key={key}>{item}</div>)}
+                </div>
                 </div>
             </ModalContent>
         </Modal>
