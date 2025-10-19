@@ -105,7 +105,12 @@ restaurantSchema.virtual('isOpen').get(function() {
     if (!openTime || !closeTime) return false;
     
     const openTimeNum = parseInt(openTime.replace(':', ''));
-    const closeTimeNum = parseInt(closeTime.replace(':', ''));
+    let closeTimeNum = parseInt(closeTime.replace(':', ''));
+    
+    // Handle 24:00 as midnight (00:00 next day) - treat as 2400 for comparison
+    if (closeTime === '24:00') {
+        closeTimeNum = 2400;
+    }
     
     if (closeTimeNum < openTimeNum) {
         return currentTime >= openTimeNum || currentTime <= closeTimeNum;
