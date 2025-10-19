@@ -95,6 +95,45 @@ exports.createTransaction = async (req, res) => {
             });
         }
         
+        const UserData = require('../models/userData');
+        const userData = await UserData.findOne({ user_id });
+        if (userData) {
+            const now = new Date('2024-10-19T12:00:00Z'); 
+            let startDate;
+            
+            switch (userData.timeUnit) {
+                case 'daily':
+                    startDate = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+                    break;
+                case 'weekly':
+                    const dayOfWeek = now.getDay();
+                    startDate = new Date(now);
+                    startDate.setDate(now.getDate() - dayOfWeek);
+                    startDate.setHours(0, 0, 0, 0);
+                    break;
+                case 'monthly':
+                    startDate = new Date(now.getFullYear(), now.getMonth(), 1);
+                    break;
+                default:
+                    startDate = new Date(now.getTime() - (7 * 24 * 60 * 60 * 1000)); // Default to weekly
+            }
+            
+            const currentTransactions = await Transaction.find({
+                user_id,
+                createdAt: { $gte: startDate }
+            });
+            
+            const currentSpending = currentTransactions.reduce((sum, t) => sum + t.amount, 0);
+            const remainingBudget = userData.budgetAmount - currentSpending;
+            
+            if (amount > remainingBudget) {
+                return res.status(400).json({
+                    success: false,
+                    message: `Transaction would exceed your ${userData.timeUnit} budget. You have $${remainingBudget.toFixed(2)} remaining.`
+                });
+            }
+        }
+        
         const transaction = new Transaction({
             amount,
             user_id,

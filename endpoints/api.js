@@ -18,7 +18,7 @@ router.post('/transactions', controller.createTransaction);
 router.delete('/transactions/:id', controller.deleteTransaction);
 
 // Budget endpoints
-router.post('/budget', controller.addSpending);
+router.post('/budget/:userId/spending', controller.addSpending);
 router.get('/budget/:userId', controller.getUserBudget);
 router.put('/budget/:userId', controller.updateUserBudget);
 
