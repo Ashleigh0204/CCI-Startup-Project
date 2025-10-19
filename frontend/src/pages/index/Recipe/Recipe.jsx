@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Button from "../../../components/Button";
+import Button from "../../../components/Button.jsx";
 import ViewRecipeModal from "./ViewRecipeModal";
 import BuyIngredientsModal from "./BuyIngredientsModal";
 

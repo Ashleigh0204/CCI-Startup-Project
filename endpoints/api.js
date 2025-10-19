@@ -30,4 +30,12 @@ router.post('/recipe', controller.generateRecipe);
 router.get('/profile', controller.getAllUsers);
 router.post('/profile', controller.createUser);
 
+// User data endpoints
+router.get('/userdata', controller.getAllUserData);
+router.get('/userdata/:id', controller.getUserDataById);
+router.post('/userdata', controller.createUserData);
+router.put('/userdata/:id', controller.updateUserData);
+router.delete('/userdata/:id', controller.deleteUserData);
+router.get('/userdata/user/:userId', controller.getUserDataByUserId);
+
 module.exports = router;

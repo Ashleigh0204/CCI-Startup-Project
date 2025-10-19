@@ -38,7 +38,7 @@ export default function FilterBar({
           <option value="">All Categories</option>
           {availableKeywords.map((keyword) => (
             <option key={keyword} value={keyword}>
-              {keyword}
+              { keyword.charAt(0).toUpperCase() + keyword.slice(1)}
             </option>
           ))}
         </select>

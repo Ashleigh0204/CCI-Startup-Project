@@ -1,6 +1,6 @@
-import Modal from "../../../components/Modal/Modal"
-import ModalTitle from "../../../components/Modal/ModalTitle"
-import ModalContent from "../../../components/Modal/ModalContent"
+import Modal from "../../../components/Modal/Modal.jsx";
+import ModalTitle from "../../../components/Modal/ModalTitle.jsx";
+import ModalContent from "../../../components/Modal/ModalContent.jsx";
 import { useState, useEffect } from "react"
 
 export default function AddTransactionModal({onRequestClose, onSubmit, cancel, locations}) {

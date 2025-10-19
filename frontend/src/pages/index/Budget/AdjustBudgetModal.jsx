@@ -1,6 +1,6 @@
-import Modal from "../../../components/Modal/Modal"
-import ModalTitle from "../../../components/Modal/ModalTitle"
-import ModalContent from "../../../components/Modal/ModalContent"
+import Modal from "../../../components/Modal/Modal.jsx";
+import ModalTitle from "../../../components/Modal/ModalTitle.jsx";
+import ModalContent from "../../../components/Modal/ModalContent.jsx";
 import { useState, useEffect } from "react"
 export default function AdjustBudgetModal({onRequestClose, onSubmit, cancel}) {
     const [formData, setFormData] = useState({
@@ -93,9 +93,9 @@ export default function AdjustBudgetModal({onRequestClose, onSubmit, cancel}) {
                     )}
 
                     {currentBudget && (
-                        <div className="bg-blue-50 border border-blue-200 rounded p-3 mb-4">
-                            <p className="text-sm text-blue-800">
-                                <strong>Current Budget:</strong> ${currentBudget.budgetAmount} per {currentBudget.timeUnit}
+                        <div className="bg-green-50 border border-green-200 rounded p-3 mb-4">
+                            <p className="text-sm text-green-800">
+                                <strong>Current Budget:</strong> ${currentBudget.budgetAmount} {currentBudget.timeUnit.charAt(0).toUpperCase() + currentBudget.timeUnit.slice(1)}
                             </p>
                         </div>
                     )}
@@ -112,20 +112,20 @@ export default function AdjustBudgetModal({onRequestClose, onSubmit, cancel}) {
                             name="budgetAmount" 
                             value={formData.budgetAmount}
                             onChange={handleInputChange}
-                            className="w-full border border-gray-300 rounded p-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" 
+                            className="w-full border border-gray-300 rounded p-2 focus:ring-2 focus:ring-green-500 focus:border-green-500" 
                             placeholder="0.00"
                         />
                     </div>
                     
                     <div className="m-2">
                         <label htmlFor="timeUnit" className="block text-sm font-medium text-gray-700 mb-1">
-                            Budget Frequency
+                            Budget Period
                         </label>
                         <select 
                             name="timeUnit" 
                             value={formData.timeUnit}
                             onChange={handleInputChange}
-                            className="w-full border border-gray-300 rounded p-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                            className="w-full border border-gray-300 rounded p-2 focus:ring-2 focus:ring-green-500 focus:border-green-500"
                         >
                             <option value="daily">Daily</option>
                             <option value="weekly">Weekly</option>
