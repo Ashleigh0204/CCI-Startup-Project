@@ -1,10 +1,8 @@
 import { useState, useEffect } from 'react';
+import Button from '../../components/Button';
 
 export default function Header({ onNavigate, currentPage }) {
     const [userData, setUserData] = useState(null);
-    
-    // Debug logging
-    console.log('Header props:', { onNavigate, currentPage });
     
     useEffect(() => {
         const FIXED_USER_ID = '507f1f77bcf86cd799439011';
@@ -29,7 +27,6 @@ export default function Header({ onNavigate, currentPage }) {
             fetch('http://127.0.0.1:8080/api/profile')
               .then(response => response.json())
               .then(profileData => {
-                console.log('Profile fallback response:', profileData);
                 const firstUser = profileData.data?.[0];
                 if (firstUser) {
                   setUserData({ user_id: { username: firstUser.username } });
@@ -49,40 +46,28 @@ export default function Header({ onNavigate, currentPage }) {
                             Forty Knives and Forks
                     </div>
                     <div className="flex items-center space-x-4">
-                        <button
+                        <Button
                             onClick={() => {
-                                console.log('Home button clicked');
                                 if (onNavigate) {
                                     onNavigate('home');
-                                } else {
-                                    console.error('onNavigate function not provided');
-                                }
-                            }}
-                            className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-                                currentPage === 'home' 
-                                    ? 'bg-white text-black' 
-                                    : 'text-gray-300 hover:text-white hover:bg-gray-700'
-                            }`}
+                            }}}
+                            className={`px-3 py-2 rounded-md text-sm font-medium transition-colors`}
+                            variant={currentPage==='home' ? 'selected' : 'secondary'}
                         >
                             Home
-                        </button>
-                        <button
+                        </Button>
+                        <Button
                             onClick={() => {
                                 console.log('Profile button clicked');
                                 if (onNavigate) {
                                     onNavigate('profile');
-                                } else {
-                                    console.error('onNavigate function not provided');
-                                }
+                                } 
                             }}
-                            className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-                                currentPage === 'profile' 
-                                    ? 'bg-white text-black' 
-                                    : 'text-gray-300 hover:text-white hover:bg-gray-700'
-                            }`}
+                            className={`px-3 py-2 rounded-md text-sm font-medium transition-colors `}
+                            variant={currentPage==='profile' ? 'selected' : 'secondary'}
                         >
                             Profile
-                        </button>
+                        </Button>
                         <img src="/profile.jpg" className="h-16 rounded-full"/>
                         <div className="pl-5">{userData?.user_id?.username || 'Loading...'}</div>
                     </div>

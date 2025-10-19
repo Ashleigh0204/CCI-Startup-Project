@@ -156,7 +156,6 @@ ONLY use this format for ingredients:
             }
         } else {
             // Fallback to mock data
-            console.log('Using mock data for recipe generation');
             const mockRecipes = {
                 "chicken": {
                     "name": "Mediterranean Herb-Crusted Chicken",
@@ -235,7 +234,6 @@ ONLY use this format for ingredients:
         
         // Convert ingredients from object to array format if needed
         if (recipeData.ingredients && typeof recipeData.ingredients === 'object' && !Array.isArray(recipeData.ingredients)) {
-            console.log('Converting ingredients from object to array format...');
             const ingredientsArray = Object.entries(recipeData.ingredients).map(([name, data]) => ({
                 name: name,
                 amount: data.amount || data.quantity || '1 unit',
@@ -357,7 +355,6 @@ Make sure each suggestion includes a compelling 200-character summary that captu
             }
         } else {
             // Fallback to mock suggestions
-            console.log('Using mock data for recipe suggestions');
             suggestions = [
                 {
                     "name": "Mediterranean Herb-Crusted Chicken",

@@ -7,11 +7,7 @@ import Profile from './pages/Profile/Profile.jsx'
 export default function App() {
   const [currentPage, setCurrentPage] = useState('home');
 
-  // Debug logging
-  console.log('App currentPage:', currentPage);
-
   const handleNavigate = (page) => {
-    console.log('Navigating to:', page);
     setCurrentPage(page);
   };
 

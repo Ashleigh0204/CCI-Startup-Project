@@ -88,7 +88,7 @@ export default function BuyIngredientsModal({onRequestClose, onSubmit, cancel, r
             <ModalTitle>
                 {recipe.name} Ingredients
             </ModalTitle>
-            <ModalContent>
+            <ModalContent className="max-h-80 overflow-y-auto">
                 <div className="space-y-4">
                     {/* Ingredients List */}
                     <div>
