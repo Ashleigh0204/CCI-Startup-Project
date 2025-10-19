@@ -1,5 +1,5 @@
-const UserData = require('../models/userData');
-const User = require('../models/user');
+import UserData from '../models/userData.js';
+import User from '../models/user.js';
 
 // Mock recipe data for testing when Gemini API key is not available
 const mockRecipes = {
@@ -126,7 +126,7 @@ const mockRecipes = {
 };
 
 // POST /recipes/generate - Generate a recipe (mock version for testing)
-exports.generateRecipe = async (req, res) => {
+export const generateRecipe = async (req, res) => {
     try {
         const { userId, prompt, cuisine, mealType } = req.body;
         
@@ -203,7 +203,7 @@ exports.generateRecipe = async (req, res) => {
 };
 
 // GET /recipes/suggestions - Get recipe suggestions (mock version)
-exports.getRecipeSuggestions = async (req, res) => {
+export const getRecipeSuggestions = async (req, res) => {
     try {
         const { userId, limit = 3 } = req.query;
         

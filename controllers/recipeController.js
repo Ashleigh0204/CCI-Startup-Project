@@ -1,7 +1,7 @@
-const UserData = require('../models/userData');
-const User = require('../models/user');
-const { GoogleGenerativeAI } = require('@google/generative-ai');
-const dotenv = require('dotenv');
+import UserData from '../models/userData.js';
+import User from '../models/user.js';
+import { GoogleGenerativeAI } from '@google/generative-ai';
+import dotenv from 'dotenv.js';
 
 // Load environment variables
 dotenv.config();
@@ -10,7 +10,7 @@ dotenv.config();
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
 // POST /recipes/generate - Generate a recipe using Gemini AI (no database storage)
-exports.generateRecipe = async (req, res) => {
+export const generateRecipe = async (req, res) => {
     try {
         const { userId, prompt, cuisine, mealType } = req.body;
         
@@ -195,7 +195,7 @@ ONLY use this format for ingredients:
 };
 
 // GET /recipes/suggestions - Get recipe suggestions based on user preferences
-exports.getRecipeSuggestions = async (req, res) => {
+export const getRecipeSuggestions = async (req, res) => {
     try {
         const { userId, limit = 1 } = req.query;
         

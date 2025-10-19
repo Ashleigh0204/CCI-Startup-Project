@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
 const restaurantSchema = new Schema({
@@ -124,4 +124,4 @@ restaurantSchema.set('toJSON', { virtuals: true });
 
 const Restaurant = mongoose.model('Restaurant', restaurantSchema);
 
-module.exports = Restaurant;
+export default Restaurant;

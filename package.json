@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Ashleigh, Hafsa, and Toya's project for the 2025 CCI Startup Hackathon",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "seed": "node runSeed.js",

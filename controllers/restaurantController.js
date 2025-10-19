@@ -1,7 +1,7 @@
-const Restaurant = require('../models/restaurants');
+import Restaurant from '../models/restaurants.js';
 
 // GET /restaurants - Get all restaurants
-exports.getAllRestaurants = async (req, res) => {
+export const getAllRestaurants = async (req, res) => {
     try {
         const restaurants = await Restaurant.find();
         res.json({
@@ -19,7 +19,7 @@ exports.getAllRestaurants = async (req, res) => {
 };
 
 // GET /restaurants/:id - Get restaurant by ID
-exports.getRestaurantById = async (req, res) => {
+export const getRestaurantById = async (req, res) => {
     try {
         const restaurant = await Restaurant.findById(req.params.id);
         if (!restaurant) {
@@ -42,7 +42,7 @@ exports.getRestaurantById = async (req, res) => {
 };
 
 // POST /restaurants - Create new restaurant
-exports.createRestaurant = async (req, res) => {
+export const createRestaurant = async (req, res) => {
     try {
         const {
             name,
@@ -95,7 +95,7 @@ exports.createRestaurant = async (req, res) => {
 };
 
 // PUT /restaurants/:id - Update restaurant
-exports.updateRestaurant = async (req, res) => {
+export const updateRestaurant = async (req, res) => {
     try {
         const restaurantId = req.params.id;
         
@@ -127,7 +127,7 @@ exports.updateRestaurant = async (req, res) => {
 };
 
 // DELETE /restaurants/:id - Delete restaurant
-exports.deleteRestaurant = async (req, res) => {
+export const deleteRestaurant = async (req, res) => {
     try {
         const restaurantId = req.params.id;
         
@@ -154,7 +154,7 @@ exports.deleteRestaurant = async (req, res) => {
 };
 
 // GET /restaurants/search - Search restaurants by keywords
-exports.searchRestaurants = async (req, res) => {
+export const searchRestaurants = async (req, res) => {
     try {
         const { q, keywords } = req.query;
         
@@ -189,7 +189,7 @@ exports.searchRestaurants = async (req, res) => {
 };
 
 // GET /restaurants/open - Get currently open restaurants
-exports.getOpenRestaurants = async (req, res) => {
+export const getOpenRestaurants = async (req, res) => {
     try {
         const restaurants = await Restaurant.find();
         const openRestaurants = restaurants.filter(restaurant => restaurant.isOpen);

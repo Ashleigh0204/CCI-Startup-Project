@@ -1,9 +1,9 @@
-const User = require('../models/user');
-const UserData = require('../models/userData');
-const bcrypt = require('bcrypt');
+import User from '../models/user.js';
+import UserData from '../models/userData.js';
+import bcrypt from 'bcrypt';
 
 // GET /users - Get all users
-exports.getAllUsers = async (req, res) => {
+export const getAllUsers = async (req, res) => {
     try {
         const users = await User.find().select('-passwordHash');
         res.json({
@@ -21,7 +21,7 @@ exports.getAllUsers = async (req, res) => {
 };
 
 // GET /users/:id - Get user by ID
-exports.getUserById = async (req, res) => {
+export const getUserById = async (req, res) => {
     try {
         const user = await User.findById(req.params.id).select('-passwordHash');
         if (!user) {
@@ -44,7 +44,7 @@ exports.getUserById = async (req, res) => {
 };
 
 // POST /users - Create new user
-exports.createUser = async (req, res) => {
+export const createUser = async (req, res) => {
     try {
         const { username, password } = req.body;
         
@@ -95,7 +95,7 @@ exports.createUser = async (req, res) => {
 };
 
 // PUT /users/:id - Update user
-exports.updateUser = async (req, res) => {
+export const updateUser = async (req, res) => {
     try {
         const { username, password } = req.body;
         const userId = req.params.id;
@@ -132,7 +132,7 @@ exports.updateUser = async (req, res) => {
 };
 
 // DELETE /users/:id - Delete user
-exports.deleteUser = async (req, res) => {
+export const deleteUser = async (req, res) => {
     try {
         const userId = req.params.id;
         
@@ -162,7 +162,7 @@ exports.deleteUser = async (req, res) => {
 };
 
 // POST /users/login - User login
-exports.loginUser = async (req, res) => {
+export const loginUser = async (req, res) => {
     try {
         const { username, password } = req.body;
         

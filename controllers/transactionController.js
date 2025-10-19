@@ -1,9 +1,9 @@
-const Transaction = require('../models/transactions');
-const User = require('../models/user');
-const Restaurant = require('../models/restaurants');
+import Transaction from '../models/transactions.js';
+import User from '../models/user.js';
+import Restaurant from '../models/restaurants.js';
 
 // GET /transactions - Get all transactions
-exports.getAllTransactions = async (req, res) => {
+export const getAllTransactions = async (req, res) => {
     try {
         const transactions = await Transaction.find()
             .populate('user_id', 'username')
@@ -24,7 +24,7 @@ exports.getAllTransactions = async (req, res) => {
 };
 
 // GET /transactions/:id - Get transaction by ID
-exports.getTransactions = async (req, res) => {
+export const getTransactions = async (req, res) => {
     try {
         const transaction = await Transaction.findById(req.params.id)
             .populate('user_id', 'username')
@@ -51,7 +51,7 @@ exports.getTransactions = async (req, res) => {
 };
 
 // POST /transactions - Create new transaction
-exports.createTransaction = async (req, res) => {
+export const createTransaction = async (req, res) => {
     try {
         const { amount, user_id, location } = req.body;
         
@@ -122,7 +122,7 @@ exports.createTransaction = async (req, res) => {
 };
 
 // PUT /transactions/:id - Update transaction
-exports.updateTransaction = async (req, res) => {
+export const updateTransaction = async (req, res) => {
     try {
         const transactionId = req.params.id;
         const { amount, user_id, location } = req.body;
@@ -185,7 +185,7 @@ exports.updateTransaction = async (req, res) => {
 };
 
 // DELETE /transactions/:id - Delete transaction
-exports.deleteTransaction = async (req, res) => {
+export const deleteTransaction = async (req, res) => {
     try {
         const transactionId = req.params.id;
         
@@ -212,7 +212,7 @@ exports.deleteTransaction = async (req, res) => {
 };
 
 // GET /transactions/user/:userId - Get transactions by user
-exports.getTransactionsByUser = async (req, res) => {
+export const getTransactionsByUser = async (req, res) => {
     try {
         const userId = req.params.userId;
         
@@ -244,7 +244,7 @@ exports.getTransactionsByUser = async (req, res) => {
 };
 
 // GET /transactions/restaurant/:restaurantId - Get transactions by restaurant
-exports.getTransactionsByRestaurant = async (req, res) => {
+export const getTransactionsByRestaurant = async (req, res) => {
     try {
         const restaurantId = req.params.restaurantId;
         

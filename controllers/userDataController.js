@@ -1,8 +1,8 @@
-const UserData = require('../models/userData');
-const User = require('../models/user');
+import UserData from '../models/userData.js';
+import User from '../models/user.js';
 
 // GET /userdata - Get all user data
-exports.getAllUserData = async (req, res) => {
+export const getAllUserData = async (req, res) => {
     try {
         const userData = await UserData.find().populate('user_id', 'username');
         
@@ -21,7 +21,7 @@ exports.getAllUserData = async (req, res) => {
 };
 
 // GET /userdata/:id - Get user data by ID
-exports.getUserDataById = async (req, res) => {
+export const getUserDataById = async (req, res) => {
     try {
         const userData = await UserData.findById(req.params.id).populate('user_id', 'username');
         
@@ -46,7 +46,7 @@ exports.getUserDataById = async (req, res) => {
 };
 
 // POST /userdata - Create new user data
-exports.createUserData = async (req, res) => {
+export const createUserData = async (req, res) => {
     try {
         const { user_id, preferences, diet, goal, budgetAmount, timeUnit } = req.body;
         
@@ -122,7 +122,7 @@ exports.createUserData = async (req, res) => {
 };
 
 // PUT /userdata/:id - Update user data
-exports.updateUserData = async (req, res) => {
+export const updateUserData = async (req, res) => {
     try {
         const userDataId = req.params.id;
         const { preferences, diet, goal, budgetAmount, timeUnit } = req.body;
@@ -174,7 +174,7 @@ exports.updateUserData = async (req, res) => {
 };
 
 // DELETE /userdata/:id - Delete user data
-exports.deleteUserData = async (req, res) => {
+export const deleteUserData = async (req, res) => {
     try {
         const userDataId = req.params.id;
         
@@ -201,7 +201,7 @@ exports.deleteUserData = async (req, res) => {
 };
 
 // GET /userdata/user/:userId - Get user data by user ID
-exports.getUserDataByUserId = async (req, res) => {
+export const getUserDataByUserId = async (req, res) => {
     try {
         const userId = req.params.userId;
         

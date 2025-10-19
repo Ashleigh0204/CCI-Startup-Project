@@ -1,6 +1,11 @@
-const mongoose = require('mongoose');
-const dotenv = require('dotenv');
-const { seedDatabase } = require('./seed');
+import mongoose from 'mongoose';
+import dotenv from 'dotenv';
+import { seedDatabase } from './seed.js';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 // Load environment variables
 dotenv.config();
@@ -35,6 +40,7 @@ async function runSeed() {
     }
 }
 
-if (require.main === module) {
+// Check if this module is the main module
+if (import.meta.url === `file://${process.argv[1]}`) {
     runSeed();
 }

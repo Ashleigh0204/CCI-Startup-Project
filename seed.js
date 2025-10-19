@@ -1,10 +1,9 @@
-const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
-
-const User = require('./models/user');
-const UserData = require('./models/userData');
-const Transaction = require('./models/transactions');
-const Restaurant = require('./models/restaurants');
+import mongoose from 'mongoose';
+import bcrypt from 'bcrypt';
+import User from './models/user.js';
+import UserData from './models/userData.js';
+import Transaction from './models/transactions.js';
+import Restaurant from './models/restaurants.js';
 
 // Fixed ObjectId for the first user (consistent across seeds)
 const FIXED_FIRST_USER_ID = new mongoose.Types.ObjectId('507f1f77bcf86cd799439011');
@@ -223,4 +222,4 @@ async function seedDatabase() {
     }
 }
 
-module.exports = { seedDatabase };
+export { seedDatabase };

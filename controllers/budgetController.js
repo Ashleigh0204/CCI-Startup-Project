@@ -1,9 +1,9 @@
-const UserData = require('../models/userData');
-const Transaction = require('../models/transactions');
-const User = require('../models/user');
+import UserData from '../models/userData.js';
+import Transaction from '../models/transactions.js';
+import User from '../models/user.js';
 
 // GET /budget/:userId - Get user's budget information
-exports.getUserBudget = async (req, res) => {
+export const getUserBudget = async (req, res) => {
     try {
         const userId = req.params.userId;
         
@@ -91,7 +91,7 @@ exports.getUserBudget = async (req, res) => {
 };
 
 // PUT /budget/:userId - Update user's budget
-exports.updateUserBudget = async (req, res) => {
+export const updateUserBudget = async (req, res) => {
     try {
         const userId = req.params.userId;
         const { budgetAmount, timeUnit } = req.body;
@@ -170,7 +170,7 @@ exports.updateUserBudget = async (req, res) => {
 };
 
 // POST /budget/:userId/spending - Add spending transaction
-exports.addSpending = async (req, res) => {
+export const addSpending = async (req, res) => {
     try {
         const userId = req.params.userId;
         const { amount, locationId, description } = req.body;
@@ -241,7 +241,7 @@ exports.addSpending = async (req, res) => {
 };
 
 // GET /budget/:userId/spending-history - Get spending history
-exports.getSpendingHistory = async (req, res) => {
+export const getSpendingHistory = async (req, res) => {
     try {
         const userId = req.params.userId;
         const { period = 'monthly', limit = 50 } = req.query;
@@ -338,7 +338,7 @@ exports.getSpendingHistory = async (req, res) => {
 };
 
 // GET /budget/:userId/insights - Get budget insights and recommendations
-exports.getBudgetInsights = async (req, res) => {
+export const getBudgetInsights = async (req, res) => {
     try {
         const userId = req.params.userId;
         

@@ -1,13 +1,11 @@
-const path = require('path');
-const { frontendPath } = require("../config.js");
-
-// Import all controllers
-const userController = require('./userController');
-const restaurantController = require('./restaurantController');
-const transactionController = require('./transactionController');
-const userDataController = require('./userDataController');
-const recipeController = require('./recipeController');
-const budgetController = require('./budgetController');
+import path from 'path';
+import { frontendPath } from "../config.js";
+import * as userController from './userController.js';
+import * as restaurantController from './restaurantController.js';
+import * as transactionController from './transactionController.js';
+import * as userDataController from './userDataController.js';
+import * as recipeController from './recipeController.js';
+import * as budgetController from './budgetController.js';
 
 // GET / => display index page
 const index = (req, res) => {
@@ -15,7 +13,7 @@ const index = (req, res) => {
 };
 
 // Export all controllers
-module.exports = {
+export default {
     // User controllers
     ...userController,
     
