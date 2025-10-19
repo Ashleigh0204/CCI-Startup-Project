@@ -6,8 +6,13 @@ const dotenv = require('dotenv');
 // Load environment variables
 dotenv.config();
 
-// Initialize Gemini AI
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+// Initialize Gemini AI (with fallback to mock data if API key is not available)
+let genAI = null;
+if (process.env.GEMINI_API_KEY) {
+    genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+} else {
+    console.log('GEMINI_API_KEY not found. Using mock data for recipe generation.');
+}
 
 // POST /recipes/generate - Generate a recipe using Gemini AI (no database storage)
 exports.generateRecipe = async (req, res) => {
@@ -124,27 +129,108 @@ ONLY use this format for ingredients:
   
 `;
 
-        // Generate recipe using Gemini
-        const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
-        const result = await model.generateContent(geminiPrompt);
-        const response = await result.response;
-        const text = response.text();
-        
-        // Parse the JSON response
+        // Generate recipe using Gemini or fallback to mock data
         let recipeData;
-        try {
-            // Clean the response text (remove markdown formatting if present)
-            const cleanedText = text.replace(/```json\n?|\n?```/g, '').trim();
-            recipeData = JSON.parse(cleanedText);
-        } catch (parseError) {
-            console.error('Error parsing Gemini response:', parseError);
-            console.error('Raw response:', text);
-            return res.status(500).json({
-                success: false,
-                message: 'Error parsing recipe data from AI response',
-                error: parseError.message,
-                rawResponse: text
-            });
+        
+        if (genAI) {
+            // Use Gemini AI
+            const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
+            const result = await model.generateContent(geminiPrompt);
+            const response = await result.response;
+            const text = response.text();
+            
+            // Parse the JSON response
+            try {
+                // Clean the response text (remove markdown formatting if present)
+                const cleanedText = text.replace(/```json\n?|\n?```/g, '').trim();
+                recipeData = JSON.parse(cleanedText);
+            } catch (parseError) {
+                console.error('Error parsing Gemini response:', parseError);
+                console.error('Raw response:', text);
+                return res.status(500).json({
+                    success: false,
+                    message: 'Error parsing recipe data from AI response',
+                    error: parseError.message,
+                    rawResponse: text
+                });
+            }
+        } else {
+            // Fallback to mock data
+            console.log('Using mock data for recipe generation');
+            const mockRecipes = {
+                "chicken": {
+                    "name": "Mediterranean Herb-Crusted Chicken",
+                    "summary": "Tender chicken breast coated in aromatic Mediterranean herbs, pan-seared to golden perfection. Served with roasted vegetables and a light lemon-herb sauce.",
+                    "ingredients": [
+                        { "name": "Chicken Breast", "amount": "2 pieces (6 oz each)", "price": 8.50 },
+                        { "name": "Olive Oil", "amount": "2 tbsp", "price": 1.20 },
+                        { "name": "Mixed Herbs", "amount": "1 tbsp", "price": 0.75 },
+                        { "name": "Lemon", "amount": "1 medium", "price": 0.80 },
+                        { "name": "Garlic", "amount": "3 cloves", "price": 0.50 },
+                        { "name": "Cherry Tomatoes", "amount": "1 cup", "price": 2.25 },
+                        { "name": "Fresh Spinach", "amount": "2 cups", "price": 1.50 }
+                    ],
+                    "steps": [
+                        "Step 1: Preheat oven to 400°F (200°C). Line a baking sheet with parchment paper.",
+                        "Step 2: Season chicken breasts with salt, pepper, and mixed herbs on both sides.",
+                        "Step 3: Heat 1 tbsp olive oil in a large oven-safe skillet over medium-high heat.",
+                        "Step 4: Sear chicken breasts for 3 minutes per side until golden brown.",
+                        "Step 5: Transfer skillet to oven and bake for 15-18 minutes until chicken reaches 165°F.",
+                        "Step 6: Meanwhile, heat remaining olive oil in a separate pan. Add minced garlic and cook for 30 seconds.",
+                        "Step 7: Add cherry tomatoes and cook for 2-3 minutes until they start to burst.",
+                        "Step 8: Add spinach and cook until wilted, about 2 minutes. Season with salt and pepper.",
+                        "Step 9: Remove chicken from oven and let rest for 5 minutes.",
+                        "Step 10: Serve chicken over the tomato-spinach mixture with lemon wedges."
+                    ],
+                    "totalCost": 15.50,
+                    "dietaryInfo": {
+                        "diet": "omnivore",
+                        "preferences": ["healthy", "mediterranean", "protein-rich"],
+                        "allergens": []
+                    }
+                },
+                "pasta": {
+                    "name": "Creamy Mushroom Pasta",
+                    "summary": "Rich and creamy pasta with sautéed mushrooms, garlic, and herbs. A comforting vegetarian dish perfect for any night of the week.",
+                    "ingredients": [
+                        { "name": "Pasta", "amount": "12 oz", "price": 2.50 },
+                        { "name": "Mixed Mushrooms", "amount": "1 lb", "price": 4.00 },
+                        { "name": "Heavy Cream", "amount": "1 cup", "price": 2.00 },
+                        { "name": "Garlic", "amount": "4 cloves", "price": 0.50 },
+                        { "name": "Fresh Thyme", "amount": "2 tbsp", "price": 1.00 },
+                        { "name": "Parmesan Cheese", "amount": "1/2 cup grated", "price": 3.00 },
+                        { "name": "Butter", "amount": "2 tbsp", "price": 0.50 }
+                    ],
+                    "steps": [
+                        "Step 1: Cook pasta according to package directions until al dente. Reserve 1 cup pasta water.",
+                        "Step 2: Heat butter in a large skillet over medium-high heat.",
+                        "Step 3: Add mushrooms and cook for 5-7 minutes until golden brown.",
+                        "Step 4: Add minced garlic and thyme, cook for 1 minute until fragrant.",
+                        "Step 5: Pour in heavy cream and bring to a simmer.",
+                        "Step 6: Add cooked pasta and toss to combine.",
+                        "Step 7: Add grated Parmesan and toss until creamy.",
+                        "Step 8: Add reserved pasta water as needed to achieve desired consistency.",
+                        "Step 9: Season with salt and pepper to taste.",
+                        "Step 10: Serve immediately with extra Parmesan on top."
+                    ],
+                    "totalCost": 13.50,
+                    "dietaryInfo": {
+                        "diet": "vegetarian",
+                        "preferences": ["comfort food", "creamy", "mushroom"],
+                        "allergens": ["dairy"]
+                    }
+                }
+            };
+            
+            // Select mock recipe based on prompt
+            const promptLower = prompt.toLowerCase();
+            if (promptLower.includes('chicken')) {
+                recipeData = mockRecipes.chicken;
+            } else if (promptLower.includes('pasta')) {
+                recipeData = mockRecipes.pasta;
+            } else {
+                recipeData = mockRecipes.chicken; // Default
+            }
         }
         
         // Convert ingredients from object to array format if needed
@@ -248,23 +334,56 @@ exports.getRecipeSuggestions = async (req, res) => {
 
 Make sure each suggestion includes a compelling 200-character summary that captures the essence of the recipe.`;
 
-        const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
-        const result = await model.generateContent(suggestionPrompt);
-        const response = await result.response;
-        const text = response.text();
-        
-        // Parse the JSON response
         let suggestions;
-        try {
-            const cleanedText = text.replace(/```json\n?|\n?```/g, '').trim();
-            suggestions = JSON.parse(cleanedText);
-        } catch (parseError) {
-            console.error('Error parsing suggestions response:', parseError);
-            return res.status(500).json({
-                success: false,
-                message: 'Error parsing recipe suggestions',
-                error: parseError.message
-            });
+        
+        if (genAI) {
+            // Use Gemini AI
+            const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
+            const result = await model.generateContent(suggestionPrompt);
+            const response = await result.response;
+            const text = response.text();
+            
+            // Parse the JSON response
+            try {
+                const cleanedText = text.replace(/```json\n?|\n?```/g, '').trim();
+                suggestions = JSON.parse(cleanedText);
+            } catch (parseError) {
+                console.error('Error parsing suggestions response:', parseError);
+                return res.status(500).json({
+                    success: false,
+                    message: 'Error parsing recipe suggestions',
+                    error: parseError.message
+                });
+            }
+        } else {
+            // Fallback to mock suggestions
+            console.log('Using mock data for recipe suggestions');
+            suggestions = [
+                {
+                    "name": "Mediterranean Herb-Crusted Chicken",
+                    "summary": "Tender chicken breast coated in aromatic Mediterranean herbs, pan-seared to golden perfection. Served with roasted vegetables and a light lemon-herb sauce.",
+                    "description": "Healthy protein with Mediterranean flavors",
+                    "estimatedCost": 15.50,
+                    "difficulty": "medium",
+                    "cookingTime": "30 minutes"
+                },
+                {
+                    "name": "Creamy Mushroom Pasta",
+                    "summary": "Rich and creamy pasta with sautéed mushrooms, garlic, and herbs. A comforting vegetarian dish perfect for any night of the week.",
+                    "description": "Comforting vegetarian pasta dish",
+                    "estimatedCost": 13.50,
+                    "difficulty": "easy",
+                    "cookingTime": "25 minutes"
+                }
+            ];
+            
+            // Filter based on user diet
+            if (userData && userData.diet === 'vegetarian') {
+                suggestions = suggestions.filter(s => s.name.includes('Mushroom'));
+            }
+            
+            // Limit results
+            suggestions = suggestions.slice(0, parseInt(limit));
         }
         
         res.json({

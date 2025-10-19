@@ -178,7 +178,6 @@ exports.addSpending = async (req, res) => {
         const userId = req.params.userId;
         const { amount, locationId, description } = req.body;
         
-        // Validate required fields
         if (!amount || !locationId) {
             return res.status(400).json({
                 success: false,
@@ -186,7 +185,6 @@ exports.addSpending = async (req, res) => {
             });
         }
         
-        // Validate amount
         if (amount <= 0) {
             return res.status(400).json({
                 success: false,
@@ -194,7 +192,6 @@ exports.addSpending = async (req, res) => {
             });
         }
         
-        // Validate amount is not too large (prevent accidental huge amounts)
         if (amount > 10000) {
             return res.status(400).json({
                 success: false,
@@ -209,6 +206,48 @@ exports.addSpending = async (req, res) => {
                 success: false,
                 message: 'User not found'
             });
+        }
+        
+        // Check budget constraints to prevent negative balance
+        const userData = await UserData.findOne({ user_id: userId });
+        if (userData) {
+            // Calculate current spending for the time period
+            const now = new Date('2024-10-19T12:00:00Z'); // Use same date as budget controller
+            let startDate;
+            
+            switch (userData.timeUnit) {
+                case 'daily':
+                    startDate = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+                    break;
+                case 'weekly':
+                    const dayOfWeek = now.getDay();
+                    startDate = new Date(now);
+                    startDate.setDate(now.getDate() - dayOfWeek);
+                    startDate.setHours(0, 0, 0, 0);
+                    break;
+                case 'monthly':
+                    startDate = new Date(now.getFullYear(), now.getMonth(), 1);
+                    break;
+                default:
+                    startDate = new Date(now.getTime() - (7 * 24 * 60 * 60 * 1000)); // Default to weekly
+            }
+            
+            // Get current spending for the period
+            const currentTransactions = await Transaction.find({
+                user_id: userId,
+                createdAt: { $gte: startDate }
+            });
+            
+            const currentSpending = currentTransactions.reduce((sum, t) => sum + t.amount, 0);
+            const remainingBudget = userData.budgetAmount - currentSpending;
+            
+            // Check if this transaction would exceed the budget
+            if (amount > remainingBudget) {
+                return res.status(400).json({
+                    success: false,
+                    message: `Transaction would exceed your ${userData.timeUnit} budget. You have $${remainingBudget.toFixed(2)} remaining.`
+                });
+            }
         }
         
         // Create transaction
@@ -229,7 +268,7 @@ exports.addSpending = async (req, res) => {
             data: {
                 id: transaction._id,
                 amount: transaction.amount,
-                location: transaction.location.name,
+                location: transaction.location ? transaction.location.name : 'Unknown',
                 date: transaction.createdAt
             }
         });
