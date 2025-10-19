@@ -1,7 +1,7 @@
-import Modal from "../../../components/Modal/Modal";
-import ModalContent from "../../../components/Modal/ModalContent";
-import ModalTitle from "../../../components/Modal/ModalTitle";
-export default function BuyIngredientsModal({onRequestClose, onSubmit, cancel, recipe}) {   
+import Modal from "../../../components/Modal/Modal.jsx";
+import ModalContent from "../../../components/Modal/ModalContent.jsx";
+import ModalTitle from "../../../components/Modal/ModalTitle.jsx";
+export default function BuyIngredientsModal({onRequestClose, onSubmit, cancel, recipe}) {
     return (
         <Modal onRequestClose={onRequestClose} onSubmit={onSubmit} cancel={cancel}>
             <ModalTitle>

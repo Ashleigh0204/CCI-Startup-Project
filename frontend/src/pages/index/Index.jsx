@@ -1,10 +1,10 @@
-import Container from "../../components/Container/Container"
-import ContainerContent from "../../components/Container/ContainerContent";
-import ContainerTitle from "../../components/Container/ContainerTitle";
-import Budget from "./Budget/Budget";
-import RestaurantView from "./RestaurantView";
-import FilterBar from "../../components/FilterBar";
-import Recipe from "./Recipe/Recipe";
+import Container from "../../components/Container/Container.jsx";
+import ContainerContent from "../../components/Container/ContainerContent.jsx";
+import ContainerTitle from "../../components/Container/ContainerTitle.jsx";
+import Budget from "./Budget/Budget.jsx";
+import RestaurantView from "./RestaurantView.jsx";  
+import FilterBar from "../../components/FilterBar.jsx";
+import Recipe from "./Recipe/Recipe.jsx";
 import { useState, useEffect, useMemo } from 'react';
 
 export default function Index() {
@@ -69,7 +69,30 @@ export default function Index() {
           .sort((a, b) => Number(b.isOpen) - Number(a.isOpen));
   }, [restaurants, searchText, selectedStatus, selectedKeyword]);
 
-  // Get closing time for today
+  const convertTo12Hour = (time24) => {
+    if (!time24 || time24 === 'closed') return time24;
+    
+    // Handle 24:00 as midnight
+    if (time24 === '24:00') {
+      return '12:00 AM';
+    }
+    
+    const [hours, minutes] = time24.split(':');
+    const hour24 = parseInt(hours, 10);
+    const minute = minutes || '00';
+    
+    if (hour24 === 0) {
+      return `12:${minute} AM`;
+    } else if (hour24 < 12) {
+      return `${hour24}:${minute} AM`;
+    } else if (hour24 === 12) {
+      return `12:${minute} PM`;
+    } else {
+      return `${hour24 - 12}:${minute} PM`;
+    }
+  };
+
+  // Get closing time for today or opening time if closed
   const getClosingTime = (restaurant) => {
     const today = new Date().getDay(); // 0 = Sunday, 1 = Monday, etc.
     const dayMap = {
@@ -82,17 +105,44 @@ export default function Index() {
       6: 'S'  // Saturday
     };
     
+    const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    
     const dayPrefix = dayMap[today];
+    const openTime = restaurant[`${dayPrefix}open`];
     const closeTime = restaurant[`${dayPrefix}close`];
     
-    // If closed today, return opening time for tomorrow
-    if (closeTime === 'closed') {
-      const tomorrow = (today + 1) % 7;
-      const tomorrowPrefix = dayMap[tomorrow];
-      return restaurant[`${tomorrowPrefix}open`] || '10:00';
+    // If restaurant is currently open, show closing time
+    if (restaurant.isOpen) {
+      const timeToReturn = closeTime || '22:00';
+      return convertTo12Hour(timeToReturn);
     }
     
-    return closeTime || '22:00';
+    // If restaurant is closed, find next opening time
+    const currentTime = new Date().getHours() * 100 + new Date().getMinutes();
+    
+    // Check if it opens later today
+    if (openTime && openTime !== 'closed') {
+      const openTimeNum = parseInt(openTime.replace(':', ''));
+      if (currentTime < openTimeNum) {
+        return convertTo12Hour(openTime);
+      }
+    }
+    
+    // Find next day it's open
+    for (let i = 1; i <= 7; i++) {
+      const nextDay = (today + i) % 7;
+      const nextDayPrefix = dayMap[nextDay];
+      const nextOpenTime = restaurant[`${nextDayPrefix}open`];
+      
+      if (nextOpenTime && nextOpenTime !== 'closed') {
+        const dayName = dayNames[nextDay];
+        const time = convertTo12Hour(nextOpenTime);
+        return `${time} on ${dayName}`;
+      }
+    }
+    
+    // Fallback
+    return 'Closed';
   };
 
   // Sample recipe data for recommendations

@@ -1,6 +1,6 @@
-import Modal from "../../../components/Modal/Modal";
-import ModalContent from "../../../components/Modal/ModalContent";
-import ModalTitle from "../../../components/Modal/ModalTitle";
+import Modal from "../../../components/Modal/Modal.jsx";
+import ModalContent from "../../../components/Modal/ModalContent.jsx";
+import ModalTitle from "../../../components/Modal/ModalTitle.jsx";
 import { useState, useEffect } from "react";
 export default function ViewTransactionModal({onRequestClose, onSubmit, cancel}) {
     const [transactions, setTransactions] = useState([]);

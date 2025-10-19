@@ -1,8 +1,8 @@
-import Button from "../../../components/Button";
+import Button from "../../../components/Button.jsx";
 import { useState, useEffect } from "react"
-import ViewTransactionModal from "./ViewTransactionModal";
-import AdjustBudgetModal from "./AdjustBudgetModal";
-import AddTransactionModal from "./AddTransactionModal";
+import ViewTransactionModal from "./ViewTransactionModal.jsx";
+import AdjustBudgetModal from "./AdjustBudgetModal.jsx";
+import AddTransactionModal from "./AddTransactionModal.jsx";
 
 export default function Budget() {
     const [viewTransactionsModalOpen, setViewTransactionModalOpen] = useState(false);
@@ -91,11 +91,21 @@ export default function Budget() {
 
     const { budgetAmount, timeUnit, totalSpent, remainingBudget, percentageUsed } = budgetData;
 
+    const getTimePeriodText = (timeUnit) => {
+        if (timeUnit === 'weekly') {
+            return 'week';
+        } else if (timeUnit === 'monthly') {
+            return 'month';
+        } else {
+            return 'day';
+        }
+    };
+    
     return (
         <div>
             <div className="mb-4">
                 <p className="text-lg">
-                    You have spent <span className="font-semibold">${totalSpent.toFixed(2)}</span> this {timeUnit}.
+                    You have spent <span className="font-semibold">${totalSpent.toFixed(2)}</span> this {getTimePeriodText(timeUnit)}.
                 </p>
                 <p className={`text-lg ${remainingBudget >= 0 ? 'text-green-600' : 'text-red-600'}`}>
                     You have <span className="font-semibold">${remainingBudget.toFixed(2)}</span> left in your budget.
